@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Test;
 use App\Models\User;
 use App\Models\Country;
+use App\Models\Photo;
+// use App\Models\Post;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -144,4 +146,22 @@ Route::get('/user/country/{id}', function($id) {
     foreach ($country->tests as $test) {
         echo $test->title.'<br>';
     }
+});
+
+// Polymorphic relations
+Route::get('/user/{id}/photos', function($id) {
+    $user = User::find($id);
+    return $user->photos;
+    foreach ($user->photos as $photo) {
+        return $photo;
+    }
+    // $post = Post::find($id);
+    // return $post->photos;
+    // foreach ($post->photos as $photo) {
+    //     return $photo;
+    // }
+    // $photo = Photo::find($id);
+    // return $photo->imageable;
+    // $imageable = $photo->imageable;
+    // return $imageable;
 });
