@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePostRequest;
 use Illuminate\Http\Request;
 use App\Models\Post;
 
@@ -34,8 +35,12 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePostRequest $request)
     {
+        // $this->validate($request, [
+        //     'title'=>'required',
+        //     'is_admin'=>'required|numeric|min:0|max:1'
+        // ]);
         Post::create($request->all());
 
         // $input = $request->all();
