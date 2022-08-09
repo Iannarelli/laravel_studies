@@ -2,11 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 // use App\Http\Controllers\PagesController;
+use App\Http\Controllers\PostsController;
 use App\Models\Test;
 use App\Models\User;
 use App\Models\Country;
 use App\Models\Photo;
-// use App\Models\Post;
+use App\Models\Post;
+use App\Models\PoliUser;
+use App\Models\Tag;
+use App\Models\Address;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -150,11 +154,25 @@ Route::get('/user/country/{id}', function($id) {
 
 // Polymorphic relations
 Route::get('/user/{id}/photos', function($id) {
-    $user = User::find($id);
-    return $user->photos;
-    foreach ($user->photos as $photo) {
-        return $photo;
-    }
+    // $user = User::find($id);
+    // foreach ($user->photos as $photo) {
+    //     return $photo;
+    // }
+    // $post = Post::find($id);
+    // foreach ($post->photos as $photo) {
+    //     return $photo;
+    // }
+    $photo = Photo::find($id);
+    $imageable = $photo->imageable;
+    return $imageable;
+});
+
+Route::get('/user/poli', function() {
+    $poli = PoliUser::find(1);
+    return $poli->polimorfismos;
+    // foreach ($user->photos as $photo) {
+    //     return $photo;
+    // }
     // $post = Post::find($id);
     // return $post->photos;
     // foreach ($post->photos as $photo) {
@@ -165,3 +183,32 @@ Route::get('/user/{id}/photos', function($id) {
     // $imageable = $photo->imageable;
     // return $imageable;
 });
+
+Route::get('/post/tag', function() {
+    $post = Post::find(1);
+    foreach ($post->tags as $tag) {
+        echo $tag->name;
+    }
+});
+
+Route::get('/tag/post', function() {
+    $tag = Tag::find(2);
+    foreach ($tag->posts as $post) {
+        echo $post->title;
+    }
+});
+
+Route::get('/insert/address', function() {
+    $user = User::find(1);
+
+    $address = new Address(['name'=>'RJ/RJ/BR']);
+
+    $user->address()->save($address);
+});
+
+Route::get('read/address', function() {
+    $user = User::find(1);
+    return $user->address;
+});
+
+Route::resource('/posts', PostsController::class);
