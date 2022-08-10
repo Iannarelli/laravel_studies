@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Create post</h1>
-    {!! Form::open(['method'=>'POST', 'action'=>'App\Http\Controllers\PostsController@store']) !!}
+    {!! Form::open(['method'=>'POST', 'action'=>'App\Http\Controllers\PostsController@store', 'files'=>true]) !!}
     <div class="form-group">
         {!! Form::label('title', 'Post title') !!}
         {!! Form::text('title', null, ['class'=>'form-control']) !!}
@@ -18,6 +18,9 @@
     <div class="form-group">
         {!! Form::label('user_id', 'User id') !!}
         {!! Form::number('user_id', null, ['class'=>'form-control']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::file('file', ['class'=>'form-control']) !!}
     </div>
     <div class="form-group">
         {!! Form::submit('Create post', ['class'=>'btn btn-primary']) !!}

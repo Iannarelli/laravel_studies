@@ -9,7 +9,8 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'is_admin', 'user_id'];
+    public $directory = '/images/';
+    protected $fillable = ['title', 'content', 'is_admin', 'user_id', 'path'];
 
     public function photos() {
         return $this->morphMany('App\Models\Photo', 'imageable');
@@ -21,5 +22,9 @@ class Post extends Model
 
     public static function scopeLasts($query) {
         return $query->orderBy('id', 'asc');
+    }
+
+    public function getPathAttribute($value) {
+        return $this->directory.$value;
     }
 }

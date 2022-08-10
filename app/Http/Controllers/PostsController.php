@@ -47,12 +47,20 @@ class PostsController extends Controller
         //     'title'=>'required',
         //     'is_admin'=>'required|numeric|min:0|max:1'
         // ]);
-        Post::create($request->all());
+        // Post::create($request->all());
 
         // $input = $request->all();
         // $input['title'] = $request->title;
         // return $input;
         // Post::create($input);
+
+        $input = $request->all();
+        if($file = $request->file('file')) {
+            $name = $file->getClientOriginalName();
+            $file->move('images', $name);
+            $input['path'] = $name;
+        }
+        Post::create($input);
 
         return redirect('/posts');
     }
