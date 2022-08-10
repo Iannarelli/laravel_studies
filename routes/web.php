@@ -11,6 +11,7 @@ use App\Models\Post;
 use App\Models\PoliUser;
 use App\Models\Tag;
 use App\Models\Address;
+use Carbon\Carbon;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -213,4 +214,22 @@ Route::get('read/address', function() {
 
 Route::group(['middleware'=>'web'], function() {
     Route::resource('/posts', PostsController::class);
+
+    Route::get('/dates', function() {
+        echo Carbon::now().'<br>';
+        echo Carbon::now()->yesterday()->diffForHumans();
+    });
+
+    Route::get('/getname', function() {
+        $user = User::findOrFail(2);
+
+        echo strtolower($user->name);
+    });
+
+    Route::get('/setname', function() {
+        $user = User::findOrFail(1);
+
+        $user->name = 'tio lipe';
+        $user->save();
+    });
 });
